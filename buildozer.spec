@@ -1,38 +1,24 @@
-name: build-android-apk
+[app]
+title = Box-Training
+package.name = boxtraining
+package.domain = org.example
 
-on:
-  workflow_dispatch:
-  push:
-    branches: [ main, master ]
+source.dir = .
+source.include_exts = py,png
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+version = 0.1
+requirements = python3, pygame==2.5.2
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+orientation = landscape
+fullscreen = 1
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+android.api = 33
+android.minapi = 21
+android.archs = arm64-v8a, armeabi-v7a
 
-      - name: Install system deps
-        run: |
-          sudo apt update
-          sudo apt install -y \
-            git zip unzip openjdk-17-jdk python3-pip \
-            libsdl2-dev libffi-dev libssl-dev liblzma-dev zlib1g-dev \
-            libjpeg-dev libfreetype6-dev
+# Lizenzen automatisch bestätigen
+android.accept_sdk_license = True
 
-      - name: Install buildozer & deps
-        run: |
-          python -m pip install --upgrade pip
-          pip install "cython==0.29.36" buildozer
-
-      - name: Build APK (debug)
-        run: |
-          buildozer android debug
-        env:
-          BUILDOZER_WARN_ON_ROOT: "0"
+[buildozer]
+log_level = 2
+warn_on_root = 0
