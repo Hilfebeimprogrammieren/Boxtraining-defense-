@@ -6,7 +6,7 @@ source.dir = .
 source.include_exts = py,png
 version = 0.1
 requirements = python3, pygame==2.5.2
-orientation = sensor
+orientation = landscape
 fullscreen = 1
 android.api = 34
 android.minapi = 21
