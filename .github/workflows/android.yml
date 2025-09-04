@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,15 +18,21 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install system deps
+      - name: Install system deps (full toolchain)
         run: |
-          sudo apt update
-          sudo apt install -y \
-            git zip unzip openjdk-17-jdk python3-pip \
-            libsdl2-dev libffi-dev libssl-dev liblzma-dev zlib1g-dev \
-            libjpeg-dev libfreetype6-dev
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            autoconf automake libtool pkg-config \
+            cmake gettext \
+            zip unzip rsync patch \
+            openjdk-17-jdk \
+            python3-pip python3-setuptools \
+            libsdl2-dev libffi-dev libssl-dev zlib1g-dev liblzma-dev \
+            libjpeg-dev libfreetype6-dev libpng-dev \
+            libncurses5 libncurses5-dev libtinfo5
 
-      - name: Install buildozer & deps
+      - name: Upgrade pip & install buildozer
         run: |
           python -m pip install --upgrade pip
           pip install "cython==0.29.36" buildozer
