@@ -30,14 +30,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install "cython==0.29.36" buildozer
 
-      - name: Build APK
+      - name: Build APK (debug)
         run: |
           buildozer android debug
         env:
           BUILDOZER_WARN_ON_ROOT: "0"
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: apk-debug
-          path: bin/*-debug.apk
